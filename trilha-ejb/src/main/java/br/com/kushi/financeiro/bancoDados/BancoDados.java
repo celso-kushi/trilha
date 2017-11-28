@@ -22,7 +22,8 @@ public class BancoDados {
     
     public static Connection conectar() throws Exception {
         
-        return DriverManager.getConnection(path, "sa", "");
+        Class.forName("org.h2.Driver");
+        return DriverManager.getConnection("jdbc:h2:~/trilha/trilha/database/trilhadb", "sa", "");
     }
     
     static String sql = "SELECT * FROM financeiro";
@@ -31,7 +32,6 @@ public class BancoDados {
         
         Connection conn = conectar();
         
-        System.out.println("br.com.kushi.financeiro.bancoDados.BancoDados.main()");
         System.out.println(conn.toString());
         
         Statement statement = null;
