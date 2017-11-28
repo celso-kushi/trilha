@@ -45,9 +45,9 @@ public class FinanceiroWebService {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
+    public String getJson() throws Exception {
         //TODO return proper representation object
-        return financeiroBean.teste();
+        return financeiroBean.obtemLancamentos();
     }
 
     /**

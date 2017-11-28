@@ -14,6 +14,7 @@ import javax.ejb.Local;
 @Local
 public interface FinanceiroBeanLocal {
 
-    String teste();
+    String teste() throws Exception ;
     
+    String obtemLancamentos() throws Exception;
 }
