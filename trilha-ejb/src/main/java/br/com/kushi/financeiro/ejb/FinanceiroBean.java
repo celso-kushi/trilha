@@ -30,26 +30,28 @@ public class FinanceiroBean implements FinanceiroBeanLocal {
         Connection conn = null;
         Statement statement = null;
         ResultSet resultSet = null;
-
+        
+        String resultado = new String();
+        
         try {
             conn = BancoDados.conectar();
 
             statement = conn.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM lancamentos");
+            resultSet = statement.executeQuery("SELECT * FROM financeiro");
 
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("nome"));
+                resultado += resultSet.getString("nome");
                 
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
-            resultSet.close();
-            statement.close();
-            conn.close();
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (conn != null)   conn.close();
         }
         
-        return resultSet.getString("nome");
+        return resultado;
     }
 }

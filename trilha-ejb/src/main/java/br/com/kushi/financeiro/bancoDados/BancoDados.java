@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.sql.DataSource;
+import org.h2.tools.Server;
 
 /**
  *
@@ -18,12 +19,15 @@ import javax.sql.DataSource;
  */
 public class BancoDados {
 
-    private static String path = "jdbc:hsqldb:file:" + System.getProperty("user.dir")+ "/database/trilhadb";
+    private static Server server = null;
     
     public static Connection conectar() throws Exception {
         
-        Class.forName("org.h2.Driver");
-        return DriverManager.getConnection("jdbc:h2:~/trilha/trilha/database/trilhadb", "sa", "");
+        //server = Server.createTcpServer("-tcpPort", "9094", "-tcpAllowOthers").start();
+        
+        Class.forName("org.hsqldb.jdbc.JDBCDriver");
+        
+        return DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/trilhadb", "SA", "");
     }
     
     static String sql = "SELECT * FROM financeiro";
@@ -48,5 +52,7 @@ public class BancoDados {
 	resultSet.close();
 	statement.close();
 	conn.close();
+        
+        //server.stop();
     }
 }
