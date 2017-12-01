@@ -1,5 +1,6 @@
 # trilha
 
-java -cp ../lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:trilhadb --dbname.0 trilhadb
+Na pasta hsqldb-database
+java -cp hsqldb-2.3.4/hsqldb/lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:trilhadb --dbname.0 trilhadb
 
-java -cp ../lib/hsqldb.jar org.hsqldb.util.DatabaseManagerSwing
+java -cp hsqldb-2.3.4/hsqldb/lib/hsqldb.jar org.hsqldb.util.DatabaseManagerSwing
