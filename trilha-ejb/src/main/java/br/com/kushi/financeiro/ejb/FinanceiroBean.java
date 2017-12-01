@@ -10,6 +10,7 @@ import br.com.kushi.financeiro.model.Lancamento;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
 import javax.ejb.Stateless;
 
 /**
@@ -26,20 +27,9 @@ public class FinanceiroBean implements FinanceiroBeanLocal {
     }
 
     @Override
-    public Lancamento obtemLancamentos() throws Exception {
+    public List<Lancamento> obtemLancamentos() throws Exception {
         
-        Connection conn = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        
-        Lancamento lancamento = null;
-        
-        conn = BancoDados.conectar();
-
-        statement = conn.createStatement();
-        resultSet = statement.executeQuery("SELECT * FROM financeiro");
-       
-        
-        return lancamento;
+        //return dao.obtemLancmento()
+        return null;
     }
 }

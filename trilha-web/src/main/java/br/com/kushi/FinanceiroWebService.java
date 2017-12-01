@@ -18,6 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Web Service
@@ -49,8 +50,8 @@ public class FinanceiroWebService {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Lancamento> obtemLancamento() throws Exception {
-        return financeiroBean.obtemLancamentos();
+    public Response obtemLancamento() throws Exception {
+        return Response.ok(financeiroBean.obtemLancamentos()).build();
     }
 
     /**
