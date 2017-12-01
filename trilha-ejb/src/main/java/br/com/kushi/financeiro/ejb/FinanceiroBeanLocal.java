@@ -5,6 +5,7 @@
  */
 package br.com.kushi.financeiro.ejb;
 
+import br.com.kushi.financeiro.model.Lancamento;
 import javax.ejb.Local;
 
 /**
@@ -16,5 +17,5 @@ public interface FinanceiroBeanLocal {
 
     String teste() throws Exception ;
     
-    String obtemLancamentos() throws Exception;
+    Lancamento obtemLancamentos() throws Exception;
 }

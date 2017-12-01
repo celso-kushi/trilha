@@ -5,8 +5,9 @@
  */
 package br.com.kushi;
 
-import br.com.kushi.financeiro.ejb.FinanceiroBean;
 import br.com.kushi.financeiro.ejb.FinanceiroBeanLocal;
+import br.com.kushi.financeiro.model.Lancamento;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -39,14 +40,16 @@ public class FinanceiroWebService {
     public FinanceiroWebService() {
     }
 
-    /**
-     * Retrieves representation of an instance of br.com.kushi.FinanceiroWebService
-     * @return an instance of java.lang.String
-     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getJson() throws Exception {
         //TODO return proper representation object
+        return "";
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Lancamento> obtemLancamento() throws Exception {
         return financeiroBean.obtemLancamentos();
     }
 

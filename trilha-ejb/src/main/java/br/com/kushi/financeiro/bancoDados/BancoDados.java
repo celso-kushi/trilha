@@ -7,11 +7,9 @@ package br.com.kushi.financeiro.bancoDados;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.sql.DataSource;
-import org.h2.tools.Server;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.hsqldb.server.Server;
 
 /**
  *
@@ -21,38 +19,14 @@ public class BancoDados {
 
     private static Server server = null;
     
-    public static Connection conectar() throws Exception {
+    public static Connection conectar()  {
         
-        //server = Server.createTcpServer("-tcpPort", "9094", "-tcpAllowOthers").start();
-        
-        Class.forName("org.hsqldb.jdbc.JDBCDriver");
-        
-        return DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/trilhadb", "SA", "");
-    }
-    
-    static String sql = "SELECT * FROM financeiro";
-    
-    public static void main(String[] args) throws Exception {
-        
-        Connection conn = conectar();
-        
-        System.out.println(conn.toString());
-        
-        Statement statement = null;
-        ResultSet resultSet = null;
-
-        statement = conn.createStatement();
-        resultSet = statement.executeQuery(sql);
-
-	while (resultSet.next()) {
-	    System.out.println(resultSet.getString("nome"));
-	    
-	}
-	
-	resultSet.close();
-	statement.close();
-	conn.close();
-        
-        //server.stop();
+        try {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+            return DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/trilhadb", "SA", "");
+        } catch (Exception ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, "Falha ao conectar no banco de dados", ex);
+        }
+        return null;
     }
 }

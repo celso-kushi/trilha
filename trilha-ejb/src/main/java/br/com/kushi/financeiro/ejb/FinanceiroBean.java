@@ -6,6 +6,7 @@
 package br.com.kushi.financeiro.ejb;
 
 import br.com.kushi.financeiro.bancoDados.BancoDados;
+import br.com.kushi.financeiro.model.Lancamento;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -25,33 +26,20 @@ public class FinanceiroBean implements FinanceiroBeanLocal {
     }
 
     @Override
-    public String obtemLancamentos() throws Exception {
+    public Lancamento obtemLancamentos() throws Exception {
         
         Connection conn = null;
         Statement statement = null;
         ResultSet resultSet = null;
         
-        String resultado = new String();
+        Lancamento lancamento = null;
         
-        try {
-            conn = BancoDados.conectar();
+        conn = BancoDados.conectar();
 
-            statement = conn.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM financeiro");
-
-            while (resultSet.next()) {
-                resultado += resultSet.getString("nome");
-                
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (resultSet != null) resultSet.close();
-            if (statement != null) statement.close();
-            if (conn != null)   conn.close();
-        }
+        statement = conn.createStatement();
+        resultSet = statement.executeQuery("SELECT * FROM financeiro");
+       
         
-        return resultado;
+        return lancamento;
     }
 }

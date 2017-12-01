@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author hiro
  */
-public class Lancamentos {
+public class Lancamento {
     
     private int id;
     private String nome;
@@ -19,6 +19,13 @@ public class Lancamentos {
     private Double valor;
     private int tipo;
 
+    public Lancamento(String nome, Date data, Double valor, int tipo) {
+        this.nome = nome;
+        this.data = data;
+        this.valor = valor;
+        this.tipo = tipo;
+    }
+    
     public int getId() {
         return id;
     }
