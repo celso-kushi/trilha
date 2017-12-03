@@ -25,7 +25,7 @@ public class BancoDados {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
             return DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/trilhadb", "SA", "");
         } catch (Exception ex) {
-            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, "Falha ao conectar no banco de dados", ex);
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, "Falha ao conectar no banco de dados", ex.getMessage());
         }
         return null;
     }

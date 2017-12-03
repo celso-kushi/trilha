@@ -5,19 +5,32 @@
  */
 package br.com.kushi.financeiro.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author hiro
  */
-public class Lancamento {
+public class Lancamento implements Serializable {
     
     private int id;
     private String nome;
     private Date data;
     private Double valor;
     private int tipo;
+    
+    public Lancamento() {
+        super();
+    }
+    
+    public Lancamento(int id, String nome, Date data, Double valor, int tipo) {
+        this.id = id;
+        this.nome = nome;
+        this.data = data;
+        this.valor = valor;
+        this.tipo = tipo;
+    }
 
     public Lancamento(String nome, Date data, Double valor, int tipo) {
         this.nome = nome;

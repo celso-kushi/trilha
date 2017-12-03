@@ -16,7 +16,12 @@ import javax.ejb.Local;
 @Local
 public interface FinanceiroBeanLocal {
 
-    String teste() throws Exception ;
-    
-    List<Lancamento> obtemLancamentos() throws Exception;
+    List<Lancamento> obterLancamentos() throws Exception;
+
+    public Boolean inserir(Lancamento lancamento) throws Exception;
+
+    public Lancamento alterar(Lancamento lancamento) throws Exception;
+
+    public Object excluir(Lancamento lancamento) throws Exception;
+
 }

@@ -5,9 +5,12 @@
  */
 package br.com.kushi;
 
+import br.com.kushi.financeiro.bancoDados.BancoDados;
 import br.com.kushi.financeiro.ejb.FinanceiroBeanLocal;
 import br.com.kushi.financeiro.model.Lancamento;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -17,6 +20,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -25,7 +30,7 @@ import javax.ws.rs.core.Response;
  *
  * @author Hiro
  */
-@Path("financeiro")
+@Path("/financeiro")
 @RequestScoped
 public class FinanceiroWebService {
 
@@ -42,24 +47,55 @@ public class FinanceiroWebService {
     }
 
     @GET
+    @Path("/obterLancamentos")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() throws Exception {
-        //TODO return proper representation object
-        return "";
-    }
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response obtemLancamento() throws Exception {
-        return Response.ok(financeiroBean.obtemLancamentos()).build();
+    public Response obterLancamentos() throws Exception {
+        
+        try {
+            return Response.ok(financeiroBean.obterLancamentos()).build();
+        } catch (Exception e) {
+            Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha obterLancamentos", e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    /**
-     * PUT method for updating or creating an instance of FinanceiroWebService
-     * @param content representation for the resource
-     */
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response inserirLancamento(Lancamento lancamento) {
+        
+        try {
+            return Response.ok(financeiroBean.inserir(lancamento)).build();
+        } catch (Exception e) {
+            Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha inserirLancamento", e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response alterarLancamento(Lancamento lancamento) {
+        
+        try {
+            return Response.ok(financeiroBean.alterar(lancamento)).build();
+        } catch (Exception e) {
+            Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha alterarLancamento", e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response excluirLancamento(Lancamento lancamento) {
+        
+        try {
+            return Response.ok(financeiroBean.excluir(lancamento)).build();
+        } catch (Exception e) {
+            Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha excluirLancamento", e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
