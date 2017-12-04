@@ -101,7 +101,7 @@ public class FinanceiroDAO {
 
             ps = conn.prepareStatement(sb.toString());
             ps.setString(1, lancamento.getNome());
-            ps.setDate(2, new Date(System.currentTimeMillis()));
+            ps.setDate(2, new Date(lancamento.getData().getTime()));
             ps.setDouble(3, lancamento.getValor());
             ps.setInt(4, lancamento.getTipo());
             ps.setInt(5, lancamento.getId());
@@ -183,7 +183,7 @@ public class FinanceiroDAO {
         }
     }
     
-    public List<Lancamento> obterLancamentos(Date dataInicial, Date dataFinal, String nome, Integer tipo) throws Exception {
+    public List<Lancamento> obterLancamentos(java.util.Date dataInicial, java.util.Date dataFinal, String nome, Integer tipo) throws Exception {
         
         Connection conn = null;
         ResultSet rs = null;
@@ -213,7 +213,7 @@ public class FinanceiroDAO {
         }
     }
     
-    private StringBuilder montarQuery (Date dataInicial, Date dataFinal, String nome, Integer tipo) throws Exception {
+    private StringBuilder montarQuery (java.util.Date dataInicial, java.util.Date dataFinal, String nome, Integer tipo) throws Exception {
         
         try {
             StringBuilder sb = new StringBuilder();
@@ -221,11 +221,11 @@ public class FinanceiroDAO {
             sb.append("SELECT * FROM financeiro WHERE 1 = 1");
             
             if (dataInicial != null && dataFinal != null) 
-                sb.append(" AND data >= ").append(dataInicial.toString()).append(" AND data <= ").append(dataFinal.toString());
+                sb.append(" AND data >= '").append(new Date(dataInicial.getTime())).append("' AND data <= '").append(new Date(dataFinal.getTime())).append("'");
             
             
             if (nome != null) 
-                sb.append(" AND UPPER(nome) LIKE '%").append(nome).append("%'");
+                sb.append(" AND UPPER(nome) LIKE '%").append(nome.toUpperCase()).append("%'");
             
             if (tipo != null) 
                 sb.append(" AND tipo = ").append(tipo);

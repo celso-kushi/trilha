@@ -90,17 +90,29 @@ public class FinanceiroBean implements FinanceiroBeanLocal {
 
     @Override
     public List<Lancamento> obterLancamentosPorData(Filtro filtro) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if (filtro.getDataInicial() == null && filtro.getDataFinal() == null)
+            throw new Exception("Informe a data inicial e data final");
+        
+        return financeiroDAO.obterLancamentos(filtro.getDataInicial(), filtro.getDataFinal(), null, null);
     }
 
     @Override
-    public List<Lancamento> obterLancamentosPorNome(Filtro fitro) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Lancamento> obterLancamentosPorNome(Filtro filtro) throws Exception {
+        
+        if (filtro.getNome() == null)
+            throw new Exception ("Informe o nome");
+        
+        return financeiroDAO.obterLancamentos(null, null, filtro.getNome(), null);
     }
 
     @Override
-    public List<Lancamento> obterLancamentosPorTipo(Filtro fitro) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Lancamento> obterLancamentosPorTipo(Filtro filtro) throws Exception {
+        
+        if (filtro.getTipo()== null)
+            throw new Exception ("Informe o tipo");
+        
+        return financeiroDAO.obterLancamentos(null, null, null, filtro.getTipo());
     }
 
 }
