@@ -7,6 +7,7 @@ package br.com.kushi.financeiro.ejb;
 
 import br.com.kushi.financeiro.bancoDados.BancoDados;
 import br.com.kushi.financeiro.dao.FinanceiroDAO;
+import br.com.kushi.financeiro.model.Filtro;
 import br.com.kushi.financeiro.model.Lancamento;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -56,12 +57,14 @@ public class FinanceiroBean implements FinanceiroBeanLocal {
     }
 
     @Override
-    public Boolean excluir(Lancamento lancamento) throws Exception {
+    public Boolean excluir(Integer id) throws Exception {
 
-        if (lancamento != null) {
+        if (id != null) {
             
-            if(lancamento.getId() > 0)
-                return (financeiroDAO.excluir(lancamento) > 1);
+            Lancamento lancamento = financeiroDAO.obtemUnico(id);
+            
+            if (lancamento != null)
+                return financeiroDAO.excluir(lancamento);
             else
                 throw new Exception("Este registro não existe, impossível excluir...");
         }
@@ -83,6 +86,21 @@ public class FinanceiroBean implements FinanceiroBeanLocal {
         if (lancamento.getTipo() == 0) {
             throw new Exception("Tipo inválido!");
         }
+    }
+
+    @Override
+    public List<Lancamento> obterLancamentosPorData(Filtro filtro) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Lancamento> obterLancamentosPorNome(Filtro fitro) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Lancamento> obterLancamentosPorTipo(Filtro fitro) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -5,10 +5,9 @@
  */
 package br.com.kushi;
 
-import br.com.kushi.financeiro.bancoDados.BancoDados;
 import br.com.kushi.financeiro.ejb.FinanceiroBeanLocal;
+import br.com.kushi.financeiro.model.Filtro;
 import br.com.kushi.financeiro.model.Lancamento;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -22,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -39,7 +39,7 @@ public class FinanceiroWebService {
     
     @Context
     private UriInfo context;
-
+    
     /**
      * Creates a new instance of FinanceiroWebService
      */
@@ -87,14 +87,28 @@ public class FinanceiroWebService {
     }
     
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response excluirLancamento(Lancamento lancamento) {
+    public Response excluirLancamento(@PathParam("id") int id) {
         
         try {
-            return Response.ok(financeiroBean.excluir(lancamento)).build();
+            return Response.ok(financeiroBean.excluir(id)).build();
         } catch (Exception e) {
             Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha excluirLancamento", e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("/obterLancamentosPorData")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obterLancamentosPorData(Filtro filtro) throws Exception {
+        
+        try {
+            return Response.ok(financeiroBean.obterLancamentosPorData(filtro)).build();
+        } catch (Exception e) {
+            Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha obterLancamentos", e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }

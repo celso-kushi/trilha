@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 
 /**
@@ -17,6 +19,9 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class FinanceiroDAO {
+    
+    @Resource
+    EJBContext context;
     
     public List<Lancamento> obterLancamentos() throws Exception {
         
@@ -70,6 +75,9 @@ public class FinanceiroDAO {
             
             return (ps.executeUpdate() > 0);
             
+        } catch (Exception e) {
+            context.setRollbackOnly();
+            throw e;
         } finally {
             if (rs != null) rs.close();
             if (ps != null) ps.close();
@@ -101,7 +109,10 @@ public class FinanceiroDAO {
             ps.executeUpdate();
             
             return obtemUnico(lancamento.getId());
-            
+        
+        } catch (Exception e) {
+            context.setRollbackOnly();
+            throw e;
         } finally {
             if (rs != null) rs.close();
             if (ps != null) ps.close();
@@ -109,7 +120,7 @@ public class FinanceiroDAO {
         }
     }
     
-    public int excluir(Lancamento lancamento) throws Exception {
+    public Boolean excluir(Lancamento lancamento) throws Exception {
         
         Connection conn = null;
         PreparedStatement ps = null;
@@ -121,13 +132,16 @@ public class FinanceiroDAO {
 
             StringBuilder sb = new StringBuilder();
             
-            sb.append("DELETE financeiro WHERE id = ?");
+            sb.append("DELETE FROM financeiro WHERE id = ?");
 
             ps = conn.prepareStatement(sb.toString());
             ps.setInt(1, lancamento.getId());
             
-            return ps.executeUpdate();
-            
+            return (ps.executeUpdate() > 0);
+        
+        } catch (Exception e) {
+            context.setRollbackOnly();
+            throw e;
         } finally {
             if (rs != null) rs.close();
             if (ps != null) ps.close();
