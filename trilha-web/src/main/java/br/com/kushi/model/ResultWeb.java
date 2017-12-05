@@ -9,13 +9,13 @@ package br.com.kushi.model;
  *
  * @author hiro
  */
-public class Result {
+public class ResultWeb {
     
     private String mensagem;
 
-    public Result() {}
+    public ResultWeb() {}
 
-    public Result(String mensagem) {
+    public ResultWeb(String mensagem) {
         this.mensagem = mensagem;
     }
     

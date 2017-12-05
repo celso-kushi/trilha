@@ -8,7 +8,7 @@ package br.com.kushi;
 import br.com.kushi.financeiro.ejb.FinanceiroBeanLocal;
 import br.com.kushi.financeiro.model.Filtro;
 import br.com.kushi.financeiro.model.Lancamento;
-import br.com.kushi.model.Result;
+import br.com.kushi.model.ResultWeb;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -60,7 +60,7 @@ public class FinanceiroWebService {
             return Response.ok(financeiroBean.obterLancamentos()).build();
         } catch (Exception e) {
             Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha obterLancamentos", e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new Result(e.getMessage())).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ResultWeb(e.getMessage())).build();
         }
     }
 
@@ -71,10 +71,10 @@ public class FinanceiroWebService {
         
         try {
             financeiroBean.inserir(lancamento);
-            return Response.ok(new Result("Sucesso")).build();
+            return Response.ok(new ResultWeb("Sucesso")).build();
         } catch (Exception e) {
             Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha inserirLancamento", e.getMessage());
-            return Response. status(Response.Status.INTERNAL_SERVER_ERROR).entity(new Result(e.getMessage())).build();
+            return Response. status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ResultWeb(e.getMessage())).build();
         }
     }
     
@@ -87,7 +87,7 @@ public class FinanceiroWebService {
             return Response.ok(financeiroBean.alterar(lancamento)).build();
         } catch (Exception e) {
             Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha alterarLancamento", e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new Result(e.getMessage())).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ResultWeb(e.getMessage())).build();
         }
     }
     
@@ -100,7 +100,7 @@ public class FinanceiroWebService {
             return Response.ok(financeiroBean.excluir(id)).build();
         } catch (Exception e) {
             Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha excluirLancamento", e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new Result(e.getMessage())).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ResultWeb(e.getMessage())).build();
         }
     }
     
@@ -120,7 +120,7 @@ public class FinanceiroWebService {
             return Response.ok(financeiroBean.obterLancamentosPorData(filtro)).build();
         } catch (Exception e) {
             Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha obterLancamentos", e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new Result(e.getMessage())).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ResultWeb(e.getMessage())).build();
         }
     }
     
@@ -137,7 +137,7 @@ public class FinanceiroWebService {
             return Response.ok(financeiroBean.obterLancamentosPorNome(filtro)).build();
         } catch (Exception e) {
             Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha obterLancamentos", e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new Result(e.getMessage())).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ResultWeb(e.getMessage())).build();
         }
     }
     
@@ -154,7 +154,7 @@ public class FinanceiroWebService {
             return Response.ok(financeiroBean.obterLancamentosPorTipo(filtro)).build();
         } catch (Exception e) {
             Logger.getLogger(FinanceiroWebService.class.getName()).log(Level.SEVERE, "Falha obterLancamentos", e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new Result(e.getMessage())).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ResultWeb(e.getMessage())).build();
         }
     }
 }
