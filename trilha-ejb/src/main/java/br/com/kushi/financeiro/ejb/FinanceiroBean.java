@@ -115,4 +115,9 @@ public class FinanceiroBean implements FinanceiroBeanLocal {
         return financeiroDAO.obterLancamentos(null, null, null, filtro.getTipo());
     }
 
+    @Override
+    public String teste() {
+        return "Testes aprovados";
+    }
+
 }

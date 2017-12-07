@@ -30,4 +30,6 @@ public interface FinanceiroBeanLocal {
     List<Lancamento> obterLancamentosPorNome(Filtro fitro) throws Exception;
     
     List<Lancamento> obterLancamentosPorTipo(Filtro fitro) throws Exception;
+    
+    String teste();
 }
