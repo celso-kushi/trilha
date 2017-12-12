@@ -6,6 +6,8 @@
 package br.com.kushi.financeiro.model;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -59,8 +61,13 @@ public class Lancamento implements Serializable {
         return data;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setData(Object data) throws ParseException {
+        if (data instanceof String) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            this.data = sdf.parse((String) data);
+        } else if (data instanceof Date) 
+            this.data = (Date) data;
+        
     }
 
     public Double getValor() {
