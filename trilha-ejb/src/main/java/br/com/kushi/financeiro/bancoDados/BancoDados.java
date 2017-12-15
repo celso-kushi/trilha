@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import org.hsqldb.server.Server;
 
 /**
@@ -19,11 +21,20 @@ public class BancoDados {
 
     private static Server server = null;
     
-    public static Connection conectar()  {
+    private static DataSource ds = null;
+    
+    private static InitialContext ic;
+    
+    
+    public static Connection conectar() throws Exception {
         
         try {
-            Class.forName("org.hsqldb.jdbc.JDBCDriver");
-            return DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/trilhadb", "SA", "");
+            
+            ic = new InitialContext();
+            ds = (DataSource) ic.lookup("java:jboss/TrilhaDS");
+            
+            return ds.getConnection();
+            
         } catch (Exception ex) {
             Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, "Falha ao conectar no banco de dados", ex.getMessage());
         }
