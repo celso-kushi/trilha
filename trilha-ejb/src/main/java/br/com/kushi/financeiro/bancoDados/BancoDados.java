@@ -29,7 +29,6 @@ public class BancoDados {
     public static Connection conectar() throws Exception {
         
         try {
-            
             ic = new InitialContext();
             ds = (DataSource) ic.lookup("java:jboss/TrilhaDS");
             
@@ -37,7 +36,7 @@ public class BancoDados {
             
         } catch (Exception ex) {
             Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, "Falha ao conectar no banco de dados", ex.getMessage());
+            throw ex;
         }
-        return null;
     }
 }
