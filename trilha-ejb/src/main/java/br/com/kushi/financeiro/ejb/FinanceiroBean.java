@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -21,9 +22,9 @@ import javax.inject.Inject;
  * @author Hiro
  */
 @Stateless
-public class FinanceiroBean implements FinanceiroBeanLocal {
+public class FinanceiroBean implements Financeiro {
 
-    @Inject
+    @EJB
     FinanceiroDAO financeiroDAO;
 
     @Override

@@ -5,7 +5,6 @@
  */
 package br.com.kushi;
 
-import br.com.kushi.financeiro.ejb.FinanceiroBeanLocal;
 import br.com.kushi.financeiro.model.Filtro;
 import br.com.kushi.financeiro.model.Lancamento;
 import br.com.kushi.model.ResultWeb;
@@ -28,6 +27,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import br.com.kushi.financeiro.ejb.Financeiro;
 
 /**
  * REST Web Service
@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 public class FinanceiroWebService {
 
     @EJB
-    FinanceiroBeanLocal financeiroBean;
+    Financeiro financeiroBean;
     
     @Context
     private UriInfo context;
