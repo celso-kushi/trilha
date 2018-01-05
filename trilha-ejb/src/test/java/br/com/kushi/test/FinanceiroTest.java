@@ -25,8 +25,8 @@ public class FinanceiroTest {
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-              //  .addPackage(FinanceiroBean.class.getPackage())
-            .addClasses(Financeiro.class, FinanceiroBean.class, FinanceiroDAO.class, BancoDados.class)
+              .addPackage(FinanceiroBean.class.getPackage())
+            //.addClasses(Financeiro.class, FinanceiroBean.class, FinanceiroDAO.class, BancoDados.class)
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
     
