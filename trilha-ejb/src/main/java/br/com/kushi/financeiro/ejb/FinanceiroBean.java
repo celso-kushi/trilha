@@ -5,17 +5,12 @@
  */
 package br.com.kushi.financeiro.ejb;
 
-import br.com.kushi.financeiro.bancoDados.BancoDados;
 import br.com.kushi.financeiro.dao.FinanceiroDAO;
 import br.com.kushi.financeiro.model.Filtro;
 import br.com.kushi.financeiro.model.Lancamento;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 /**
  *
@@ -114,11 +109,6 @@ public class FinanceiroBean implements Financeiro {
             throw new Exception ("Informe o tipo");
         
         return financeiroDAO.obterLancamentos(null, null, null, filtro.getTipo());
-    }
-
-    @Override
-    public String teste() {
-        return "Testes aprovados";
     }
 
 }

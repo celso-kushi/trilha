@@ -26,5 +26,4 @@ public interface Financeiro {
     
     List<Lancamento> obterLancamentosPorTipo(Filtro fitro) throws Exception;
     
-    String teste();
 }
