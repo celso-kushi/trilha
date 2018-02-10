@@ -53,7 +53,7 @@ public class FinanceiroDAO {
     }
 
     
-    public Boolean inserir(Lancamento lancamento) throws Exception {
+    public Integer inserir(Lancamento lancamento) throws Exception {
         
         Connection conn = null;
         PreparedStatement ps = null;
@@ -73,7 +73,13 @@ public class FinanceiroDAO {
             ps.setDouble(3, lancamento.getValor());
             ps.setInt(4, lancamento.getTipo());
             
-            return (ps.executeUpdate() > 0);
+            ps.executeUpdate();
+            
+            ps = conn.prepareStatement("SELECT CASE WHEN MAX(id) IS NULL THEN 0 ELSE MAX(id) END as id FROM financeiro");
+            rs = ps.executeQuery();
+            rs.next();
+            
+            return rs.getInt("id");
             
         } catch (Exception e) {
             context.setRollbackOnly();

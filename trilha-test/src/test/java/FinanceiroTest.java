@@ -12,8 +12,12 @@ import org.junit.runner.RunWith;
 import br.com.kushi.financeiro.ejb.Financeiro;
 import br.com.kushi.financeiro.model.Lancamento;
 import br.com.kushi.financeiro.model.TipoLancamentoEnum;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 import javax.ejb.EJB;
+import org.junit.Before;
 
 
 /**
@@ -33,14 +37,33 @@ public class FinanceiroTest {
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
     
+    @Before
+    public void limparBase() throws Exception {
+        Connection con = BancoDados.conectar();
+        con.createStatement().executeQuery("DELETE FROM financeiro");
+    }
+    
     @EJB
     Financeiro financeiro;
     
     @Test
     public void obterLancamentos() throws Exception {
+        Lancamento lancamento = new Lancamento();
+        lancamento.setNome("Teste 1");
+        lancamento.setValor(5d);
+        lancamento.setTipo(TipoLancamentoEnum.CREDITO.getId());
+        
+        financeiro.inserir(lancamento);
+        
+        lancamento = new Lancamento();
+        lancamento.setNome("Teste 2");
+        lancamento.setValor(10d);
+        lancamento.setTipo(TipoLancamentoEnum.DEBITO.getId());
+        
+        financeiro.inserir(lancamento);
         
         List<Lancamento> lancamentos = financeiro.obterLancamentos();
-        Assert.assertEquals(7, lancamentos.size());
+        Assert.assertEquals(2, lancamentos.size());
     }
     
     @Test
@@ -100,14 +123,41 @@ public class FinanceiroTest {
     @Test
     public void inserirLancamento() throws Exception {
         Lancamento lancamento = new Lancamento();
-        lancamento.setNome("Teste");
+        lancamento.setNome("Teste Inserir");
         lancamento.setValor(5d);
         lancamento.setTipo(TipoLancamentoEnum.CREDITO.getId());
         
-        financeiro.inserir(lancamento);
+        int id = financeiro.inserir(lancamento);
         
+        Lancamento lancamentoAssert = financeiro.obtemUnico(id);
         
+        Assert.assertEquals(id, lancamentoAssert.getId());
+        Assert.assertEquals(lancamento.getNome(), lancamentoAssert.getNome());
+        Assert.assertEquals(lancamento.getValor(), lancamentoAssert.getValor());
+        Assert.assertEquals(lancamento.getTipo(), lancamentoAssert.getTipo());
+    }
+    
+    
+    @Test
+    public void alterarLancamento() throws Exception {
+        Lancamento lancamento = new Lancamento();
+        lancamento.setNome("Teste Alterar");
+        lancamento.setValor(5d);
+        lancamento.setTipo(TipoLancamentoEnum.CREDITO.getId());
         
+        int id = financeiro.inserir(lancamento);
+        
+        lancamento = financeiro.obtemUnico(id);
+        lancamento.setNome("Teste Alterado");
+        lancamento.setValor(15d);
+        lancamento.setTipo(TipoLancamentoEnum.DEBITO.getId());
+        
+        Lancamento lancamentoAlterado = financeiro.alterar(lancamento);
+        
+        Assert.assertEquals(id, lancamentoAlterado.getId());
+        Assert.assertEquals(lancamento.getNome(), lancamentoAlterado.getNome());
+        Assert.assertEquals(lancamento.getValor(), lancamentoAlterado.getValor());
+        Assert.assertEquals(lancamento.getTipo(), lancamentoAlterado.getTipo());
     }
     
 

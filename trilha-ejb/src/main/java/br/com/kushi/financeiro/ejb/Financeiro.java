@@ -14,7 +14,7 @@ public interface Financeiro {
 
     List<Lancamento> obterLancamentos() throws Exception;
 
-    Boolean inserir(Lancamento lancamento) throws Exception;
+    Integer inserir(Lancamento lancamento) throws Exception;
 
     Lancamento alterar(Lancamento lancamento) throws Exception;
 
@@ -26,4 +26,5 @@ public interface Financeiro {
     
     List<Lancamento> obterLancamentosPorTipo(Filtro fitro) throws Exception;
     
+    Lancamento obtemUnico(int idLancamento) throws Exception;
 }

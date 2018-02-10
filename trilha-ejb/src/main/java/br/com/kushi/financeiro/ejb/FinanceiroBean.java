@@ -29,7 +29,7 @@ public class FinanceiroBean implements Financeiro {
     }
 
     @Override
-    public Boolean inserir(Lancamento lancamento) throws Exception {
+    public Integer inserir(Lancamento lancamento) throws Exception {
 
         if (lancamento != null) {
 
@@ -109,6 +109,13 @@ public class FinanceiroBean implements Financeiro {
             throw new Exception ("Informe o tipo");
         
         return financeiroDAO.obterLancamentos(null, null, null, filtro.getTipo());
+    }
+    
+    @Override
+    public Lancamento obtemUnico(int idLancamento) throws Exception {
+        
+        return financeiroDAO.obtemUnico(idLancamento);
+        
     }
 
 }
