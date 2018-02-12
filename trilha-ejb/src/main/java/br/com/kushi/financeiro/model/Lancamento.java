@@ -10,14 +10,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  *
  * @author hiro
  */
+@Entity
 public class Lancamento implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+
+	@Id
+    @GeneratedValue
     private int id;
-    private String nome;
+    
+    private String descricao;
+    
+    @Temporal(TemporalType.DATE)
     private Date data;
     private Double valor;
     private int tipo;
@@ -26,16 +40,16 @@ public class Lancamento implements Serializable {
         super();
     }
     
-    public Lancamento(int id, String nome, Date data, Double valor, int tipo) {
+    public Lancamento(int id, String descricao, Date data, Double valor, int tipo) {
         this.id = id;
-        this.nome = nome;
+        this.descricao = descricao;
         this.data = data;
         this.valor = valor;
         this.tipo = tipo;
     }
 
-    public Lancamento(String nome, Date data, Double valor, int tipo) {
-        this.nome = nome;
+    public Lancamento(String descricao, Date data, Double valor, int tipo) {
+        this.descricao = descricao;
         this.data = data;
         this.valor = valor;
         this.tipo = tipo;
@@ -50,11 +64,11 @@ public class Lancamento implements Serializable {
     }
 
     public String getNome() {
-        return nome;
+        return descricao;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.descricao = nome;
     }
 
     public Date getData() {
@@ -88,6 +102,34 @@ public class Lancamento implements Serializable {
 
     @Override
     public String toString() {
-        return "Lancamentos{" + "id=" + id + ", nome=" + nome + ", data=" + data + ", valor=" + valor + ", tipo=" + tipo + '}';
+        return "Lancamentos{" + "id=" + id + ", descricao=" + descricao + ", data=" + data + ", valor=" + valor + ", tipo=" + tipo + '}';
     }
+
+	/**
+	 * @return the lancamento
+	 */
+	public String getLancamento() {
+		return descricao;
+	}
+
+	/**
+	 * @param lancamento the lancamento to set
+	 */
+	public void setLancamento(String lancamento) {
+		this.descricao = lancamento;
+	}
+
+	/**
+	 * @return the descricao
+	 */
+	public String getDescricao() {
+		return descricao;
+	}
+
+	/**
+	 * @param descricao the descricao to set
+	 */
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 }
