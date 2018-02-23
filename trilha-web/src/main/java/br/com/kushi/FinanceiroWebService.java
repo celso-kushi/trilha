@@ -9,7 +9,6 @@ import br.com.kushi.financeiro.model.Filtro;
 import br.com.kushi.financeiro.model.Lancamento;
 import br.com.kushi.model.ResultWeb;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;

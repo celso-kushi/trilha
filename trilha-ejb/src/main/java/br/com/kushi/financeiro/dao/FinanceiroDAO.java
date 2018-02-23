@@ -13,10 +13,7 @@ import javax.annotation.Resource;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -60,118 +57,43 @@ public class FinanceiroDAO {
 
     public Lancamento alterar(Lancamento lancamento) throws Exception {
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
         try {
-
-            conn = BancoDados.conectar();
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.append("UPDATE financeiro SET nome = ?, data = ?, valor = ?, tipo = ? WHERE id = ?");
-
-            ps = conn.prepareStatement(sb.toString());
-            ps.setString(1, lancamento.getNome());
-            ps.setDate(2, new Date(lancamento.getData().getTime()));
-            ps.setDouble(3, lancamento.getValor());
-            ps.setInt(4, lancamento.getTipo());
-            ps.setInt(5, lancamento.getId());
-
-            ps.executeUpdate();
-
-            return obtemUnico(lancamento.getId());
+            
+            lancamento = entity.merge(lancamento);            
+            entity.flush();
+            
+            return lancamento;
 
         } catch (Exception e) {
             context.setRollbackOnly();
-            throw e;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
+            throw new Exception(e.getMessage());
+        } 
     }
 
     public Boolean excluir(Lancamento lancamento) throws Exception {
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
         try {
-
-            conn = BancoDados.conectar();
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.append("DELETE FROM financeiro WHERE id = ?");
-
-            ps = conn.prepareStatement(sb.toString());
-            ps.setInt(1, lancamento.getId());
-
-            return (ps.executeUpdate() > 0);
+            entity.remove(lancamento);            
+            entity.flush();
+            
+            return true;
 
         } catch (Exception e) {
             context.setRollbackOnly();
-            throw e;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
+            throw new Exception(e.getMessage());
+        } 
     }
 
     public Lancamento obtemUnico(int id) throws Exception {
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        Lancamento lancamento = null;
-
         try {
 
-            conn = BancoDados.conectar();
+            return entity.find(Lancamento.class, id);
 
-            StringBuilder sb = new StringBuilder();
-
-            sb.append("SELECT * FROM financeiro WHERE id = ?");
-
-            ps = conn.prepareStatement(sb.toString());
-            ps.setInt(1, id);
-
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                lancamento = new Lancamento(rs.getInt("id"), rs.getString("nome"), rs.getDate("data"), rs.getDouble("valor"), rs.getInt("tipo"));
-            }
-
-            return lancamento;
-
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
+        } catch (Exception e) {
+            context.setRollbackOnly();
+            throw new Exception(e.getMessage());
+        } 
     }
 
     public List<Lancamento> obterLancamentos(java.util.Date dataInicial, java.util.Date dataFinal, String nome, Integer tipo) throws Exception {
