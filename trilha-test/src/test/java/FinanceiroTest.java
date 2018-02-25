@@ -49,14 +49,14 @@ public class FinanceiroTest {
     @Test
     public void obterLancamentos() throws Exception {
         Lancamento lancamento = new Lancamento();
-        lancamento.setNome("Teste 1");
+        lancamento.setDescricao("Teste 1");
         lancamento.setValor(5d);
         lancamento.setTipo(TipoLancamentoEnum.CREDITO.getId());
         
         financeiro.inserir(lancamento);
         
         lancamento = new Lancamento();
-        lancamento.setNome("Teste 2");
+        lancamento.setDescricao("Teste 2");
         lancamento.setValor(10d);
         lancamento.setTipo(TipoLancamentoEnum.DEBITO.getId());
         
@@ -75,7 +75,7 @@ public class FinanceiroTest {
     @Test
     public void inserirLancamentoNomeNulo() throws Exception {
         Lancamento lancamento = new Lancamento();
-        lancamento.setNome(null);
+        lancamento.setDescricao(null);
         try {
             financeiro.inserir(lancamento);
         } catch (Exception e) {
@@ -86,7 +86,7 @@ public class FinanceiroTest {
     @Test
     public void inserirLancamentoValorNulo() throws Exception {
         Lancamento lancamento = new Lancamento();
-        lancamento.setNome("Teste");
+        lancamento.setDescricao("Teste");
         lancamento.setValor(null);
         try {
             financeiro.inserir(lancamento);
@@ -98,7 +98,7 @@ public class FinanceiroTest {
     @Test
     public void inserirLancamentoValorNegativo() throws Exception {
         Lancamento lancamento = new Lancamento();
-        lancamento.setNome("Teste");
+        lancamento.setDescricao("Teste");
         lancamento.setValor(-5d);
         try {
             financeiro.inserir(lancamento);
@@ -110,7 +110,7 @@ public class FinanceiroTest {
     @Test
     public void inserirLancamentoTipoZerado() throws Exception {
         Lancamento lancamento = new Lancamento();
-        lancamento.setNome("Teste");
+        lancamento.setDescricao("Teste");
         lancamento.setValor(5d);
         
         try {
@@ -123,7 +123,7 @@ public class FinanceiroTest {
     @Test
     public void inserirLancamento() throws Exception {
         Lancamento lancamento = new Lancamento();
-        lancamento.setNome("Teste Inserir");
+        lancamento.setDescricao("Teste Inserir");
         lancamento.setValor(5d);
         lancamento.setTipo(TipoLancamentoEnum.CREDITO.getId());
         
@@ -132,7 +132,7 @@ public class FinanceiroTest {
         Lancamento lancamentoAssert = financeiro.obtemUnico(id);
         
         Assert.assertEquals(id, lancamentoAssert.getId());
-        Assert.assertEquals(lancamento.getNome(), lancamentoAssert.getNome());
+        Assert.assertEquals(lancamento.getDescricao(), lancamentoAssert.getDescricao());
         Assert.assertEquals(lancamento.getValor(), lancamentoAssert.getValor());
         Assert.assertEquals(lancamento.getTipo(), lancamentoAssert.getTipo());
     }
@@ -141,21 +141,21 @@ public class FinanceiroTest {
     @Test
     public void alterarLancamento() throws Exception {
         Lancamento lancamento = new Lancamento();
-        lancamento.setNome("Teste Alterar");
+        lancamento.setDescricao("Teste Alterar");
         lancamento.setValor(5d);
         lancamento.setTipo(TipoLancamentoEnum.CREDITO.getId());
         
         int id = financeiro.inserir(lancamento);
         
         lancamento = financeiro.obtemUnico(id);
-        lancamento.setNome("Teste Alterado");
+        lancamento.setDescricao("Teste Alterado");
         lancamento.setValor(15d);
         lancamento.setTipo(TipoLancamentoEnum.DEBITO.getId());
         
         Lancamento lancamentoAlterado = financeiro.alterar(lancamento);
         
         Assert.assertEquals(id, lancamentoAlterado.getId());
-        Assert.assertEquals(lancamento.getNome(), lancamentoAlterado.getNome());
+        Assert.assertEquals(lancamento.getDescricao(), lancamentoAlterado.getDescricao());
         Assert.assertEquals(lancamento.getValor(), lancamentoAlterado.getValor());
         Assert.assertEquals(lancamento.getTipo(), lancamentoAlterado.getTipo());
     }

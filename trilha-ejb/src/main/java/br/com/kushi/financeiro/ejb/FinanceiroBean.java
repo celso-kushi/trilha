@@ -69,8 +69,8 @@ public class FinanceiroBean implements Financeiro {
     }
 
     private void validarLancamento(Lancamento lancamento) throws Exception {
-        if (lancamento.getNome() == null) {
-            throw new Exception("Nome não informado!");
+        if (lancamento.getDescricao()== null) {
+            throw new Exception("Descrição não informada!");
         }
         if (lancamento.getValor() == null) {
             throw new Exception("Valor não informado!");

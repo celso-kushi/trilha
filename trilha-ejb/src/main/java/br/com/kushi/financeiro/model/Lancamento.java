@@ -25,24 +25,24 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "lancamento")
 public class Lancamento implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     private String descricao;
-    
+
     @Temporal(TemporalType.DATE)
     private Date data;
     private Double valor;
     private int tipo;
-    
+
     public Lancamento() {
         super();
     }
-    
+
     public Lancamento(int id, String descricao, Date data, Double valor, int tipo) {
         this.id = id;
         this.descricao = descricao;
@@ -57,7 +57,7 @@ public class Lancamento implements Serializable {
         this.valor = valor;
         this.tipo = tipo;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -66,12 +66,12 @@ public class Lancamento implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
+    public String getDescricao() {
         return descricao;
     }
 
-    public void setNome(String nome) {
-        this.descricao = nome;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public Date getData() {
@@ -82,9 +82,10 @@ public class Lancamento implements Serializable {
         if (data instanceof String) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             this.data = sdf.parse((String) data);
-        } else if (data instanceof Date) 
+        } else if (data instanceof Date) {
             this.data = (Date) data;
-        
+        }
+
     }
 
     public Double getValor() {
@@ -108,31 +109,4 @@ public class Lancamento implements Serializable {
         return "Lancamentos{" + "id=" + id + ", descricao=" + descricao + ", data=" + data + ", valor=" + valor + ", tipo=" + tipo + '}';
     }
 
-	/**
-	 * @return the lancamento
-	 */
-	public String getLancamento() {
-		return descricao;
-	}
-
-	/**
-	 * @param lancamento the lancamento to set
-	 */
-	public void setLancamento(String lancamento) {
-		this.descricao = lancamento;
-	}
-
-	/**
-	 * @return the descricao
-	 */
-	public String getDescricao() {
-		return descricao;
-	}
-
-	/**
-	 * @param descricao the descricao to set
-	 */
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
 }

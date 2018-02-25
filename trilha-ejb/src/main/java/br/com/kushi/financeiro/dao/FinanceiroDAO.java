@@ -14,6 +14,8 @@ import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -44,44 +46,44 @@ public class FinanceiroDAO {
 
         try {
 
-            lancamento = entity.merge(lancamento);            
+            lancamento = entity.merge(lancamento);
             entity.flush();
-            
+
             return lancamento.getId();
 
         } catch (Exception e) {
             context.setRollbackOnly();
             throw new Exception(e.getMessage());
-        } 
+        }
     }
 
     public Lancamento alterar(Lancamento lancamento) throws Exception {
 
         try {
-            
-            lancamento = entity.merge(lancamento);            
+
+            lancamento = entity.merge(lancamento);
             entity.flush();
-            
+
             return lancamento;
 
         } catch (Exception e) {
             context.setRollbackOnly();
             throw new Exception(e.getMessage());
-        } 
+        }
     }
 
     public Boolean excluir(Lancamento lancamento) throws Exception {
 
         try {
-            entity.remove(lancamento);            
+            entity.remove(lancamento);
             entity.flush();
-            
+
             return true;
 
         } catch (Exception e) {
             context.setRollbackOnly();
             throw new Exception(e.getMessage());
-        } 
+        }
     }
 
     public Lancamento obtemUnico(int id) throws Exception {
@@ -93,42 +95,21 @@ public class FinanceiroDAO {
         } catch (Exception e) {
             context.setRollbackOnly();
             throw new Exception(e.getMessage());
-        } 
+        }
     }
 
     public List<Lancamento> obterLancamentos(java.util.Date dataInicial, java.util.Date dataFinal, String nome, Integer tipo) throws Exception {
 
-        Connection conn = null;
-        ResultSet rs = null;
-        Statement st = null;
-
-        List<Lancamento> lancamentos = new ArrayList<Lancamento>();
-        Lancamento lancamento = null;
         try {
+            TypedQuery typedQuery = entity.createQuery("FROM Lancamento l WHERE data BETWEEN :dataInicial AND :dataFinal", Lancamento.class);
 
-            conn = BancoDados.conectar();
+            typedQuery.setParameter("dataInicial", dataInicial, TemporalType.TIMESTAMP)
+                    .setParameter("dataFinal", dataFinal, TemporalType.TIMESTAMP).getResultList();
 
-            StringBuilder sb = montarQuery(dataInicial, dataFinal, nome, tipo);
-            st = conn.createStatement();
-            rs = st.executeQuery(sb.toString());
-
-            while (rs.next()) {
-                lancamento = new Lancamento(rs.getInt("id"), rs.getString("nome"), rs.getDate("data"), rs.getDouble("valor"), rs.getInt("tipo"));
-                lancamentos.add(lancamento);
-            }
-
-            return lancamentos;
-
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (st != null) {
-                st.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+            return null;
+        } catch (Exception e) {
+            context.setRollbackOnly();
+            throw new Exception(e.getMessage());
         }
     }
 
